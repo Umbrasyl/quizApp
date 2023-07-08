@@ -42,7 +42,7 @@ function handleWrong() {
       <header>
         <h3>{{ `Question ${currentQuestion + 1}/${quizLength}` }}</h3>
         <div class="bar">
-          <div :class="`width${currentQuestion}`" class="completion"></div>
+          <div :style="{width: `${currentQuestion/quizLength * 100}%`}" class="completion"></div>
         </div>
       </header>
       <Question 
@@ -90,19 +90,8 @@ h3 {
 .completion {
   height: 100%;
   width: 0%;
+  transition: width 0.5s ease;
   background-color: yellowgreen;
-}
-
-.width0 {
-  width: 0%;
-}
-
-.width1 {
-  width: 33%;
-}
-
-.width2 {
-  width: 66%;
 }
 
 </style>
