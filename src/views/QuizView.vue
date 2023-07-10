@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import quizes from "../data/quiz.json";
 import Question from '../components/Question.vue';
 import QuestionHeader from '../components/QuestionHeader.vue';
+import Result from '../components/Result.vue';
 
 const route = useRoute();
 const currentQuiz = quizes.find((quiz) => {
@@ -41,7 +42,10 @@ function handleAnswer(isCorr) {
       />
     </div>
     <div v-else>
-      <h2>{{ `Your score is ${correctAnswers}/${quizLength}` }}</h2>
+      <Result 
+        :correct-answers="correctAnswers"
+        :quiz-length="quizLength"
+      />
     </div>
   </div>
 </template>
@@ -52,10 +56,6 @@ function handleAnswer(isCorr) {
 .container {
   padding-top: 5rem;
   padding-left: 14%;
-}
-
-h2 {
-  font-size: 2rem;
 }
 
 </style>
