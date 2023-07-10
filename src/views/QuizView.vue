@@ -25,14 +25,6 @@ function handleAnswer(isCorr) {
   }
 }
 
-function handleCorrect() {
-  handleAnswer(true);
-}
-
-function handleWrong() {
-  handleAnswer(false);
-}
-
 </script>
 
 
@@ -42,13 +34,16 @@ function handleWrong() {
       <header>
         <h3>{{ `Question ${currentQuestion + 1}/${quizLength}` }}</h3>
         <div class="bar">
-          <div :style="{width: `${currentQuestion/quizLength * 100}%`}" class="completion"></div>
+          <div 
+            :style="{width: `${currentQuestion/quizLength * 100}%`}" 
+            class="completion"
+          ></div>
         </div>
       </header>
       <Question 
         :question="currentQuiz.questions[currentQuestion]"
-        @yes="handleCorrect"
-        @no="handleWrong"
+        @right="handleAnswer(true)"
+        @wrong="handleAnswer(false)"
       />
     </div>
     <div v-else>

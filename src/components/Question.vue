@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineEmits } from 'vue';
 const props = defineProps({
   question: {
     id: Number,
@@ -13,14 +13,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["yes", "no"]);
+const emit = defineEmits(["answered"]);
 
 function handleClick(isCorrect) {
-  if (isCorrect) {
-    emit("yes");
-  } else {
-    emit("no");
-  }
+  emit("answered", isCorrect);
 }
 
 </script>
