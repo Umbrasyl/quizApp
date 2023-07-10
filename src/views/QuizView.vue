@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import quizes from "../data/quiz.json";
 import Question from '../components/Question.vue';
+import QuestionHeader from '../components/QuestionHeader.vue';
 
 const route = useRoute();
 const currentQuiz = quizes.find((quiz) => {
@@ -18,9 +19,8 @@ function handleAnswer(isCorr) {
   if (isCorr) {
     correctAnswers++;
   }
-  if (currentQuestion.value < quizLength - 1) {
-    currentQuestion.value++;
-  } else {
+  currentQuestion.value++;
+  if (currentQuestion.value === quizLength) {
     finished.value = true;
   }
 }
@@ -30,20 +30,14 @@ function handleAnswer(isCorr) {
 
 <template>
   <div class="container">
-    <div v-if="!finished" class="question">
-      <header>
-        <h3>{{ `Question ${currentQuestion + 1}/${quizLength}` }}</h3>
-        <div class="bar">
-          <div 
-            :style="{width: `${currentQuestion/quizLength * 100}%`}" 
-            class="completion"
-          ></div>
-        </div>
-      </header>
+    <QuestionHeader
+      :current-question="currentQuestion"
+      :quiz-length="quizLength"
+    />
+    <div v-if="!finished">
       <Question 
         :question="currentQuiz.questions[currentQuestion]"
-        @right="handleAnswer(true)"
-        @wrong="handleAnswer(false)"
+        @answered="handleAnswer"
       />
     </div>
     <div v-else>
@@ -60,33 +54,8 @@ function handleAnswer(isCorr) {
   padding-left: 14%;
 }
 
-.question {
-  display: flex;
-  flex-direction: column;
-}
-
 h2 {
   font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.4rem;
-  margin: 1rem 0;
-}
-
-.bar {
-  width: 15rem;
-  height: 2rem;
-  background-color: beige;
-  margin: 1rem 0;
-  border-radius: 0.3rem;
-}
-
-.completion {
-  height: 100%;
-  width: 0%;
-  transition: width 0.5s ease;
-  background-color: yellowgreen;
 }
 
 </style>
